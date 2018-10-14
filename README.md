@@ -1,3 +1,3 @@
 # spr-backend-ExpressJS
 
-EXPRESS JS API Builder from Mysql Database
+EXPRESS JS API Builder with Mysql Database
