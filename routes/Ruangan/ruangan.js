@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-	connection.query('SELECT * from jadwal', function (error, results, fields) {
+	connection.query('SELECT * from ruangan', function (error, results, fields) {
 	  	if(error){
 	  		res.send(JSON.stringify({"status": 500, "error": error, "response": null})); 
 	  		//If there is error, we send the error in the error section with 500 status
