@@ -1,22 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var Jadwal = function (jadwal)
-{
-    this.kd_jadwal = jadwal.kd_jadwal;
-    this.nm_jadwal = jadwal.nm_jadwal;
-    this.hari = jadwal.hari;
-    this.tgl  = jadwal.tgl;
-    this.jam_awal = jadwal.jam_awal;
-    this.jam_akhir = jadwal.jam_akhir;
-    this.nip = jadwal.nip;
-    this.kd_ruang = jadwal.kd_ruang;
-    this.kd_kelas = jadwal.kd_kelas;
-};
-
 router.post('/', function (req, res, next) {
 
-    var new_jadwal = new Jadwal(req.body);
     var input = req.body;
 
     var data = {
@@ -43,7 +29,7 @@ router.post('/', function (req, res, next) {
             //If there is error, we send the error in the error section with 500 status
         } else {
             res.send(JSON.stringify({
-                "status": 200,
+                "status": res.statusCode,
                 "error": null,
                 "response": results
             }));

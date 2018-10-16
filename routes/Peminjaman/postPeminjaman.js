@@ -7,13 +7,17 @@ router.post('/', function (req, res, next) {
 
     var data = {
 
-        username: input.username,
-        password: input.password,
-        role: input.role,
-        kd_role: input.kd_role
-
+        nim : input.nim,
+        nm_jadwal : input.nm_jadwal,
+        tgl : input.tgl,
+        jam_pinjam : input.jam_pinjam,
+        jam_selesai : input.jam_selesai,
+        tujuan : input.tujuan,
+        kd_ruang : input.kd_ruang,
+        hari : inpt.hari
     };
-    connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
+
+    connection.query("INSERT INTO peminjaman SET ?", data , function (error, results, fields) {
         if (error) {
             res.send(JSON.stringify({
                 "status": 500,

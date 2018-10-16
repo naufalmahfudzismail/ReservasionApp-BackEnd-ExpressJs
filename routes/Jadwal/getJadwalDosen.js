@@ -1,8 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function (req, res, next) {
-	connection.query('SELECT * from jadwal', function (error, results, fields) {
+router.get('/:nip', function (req, res, next) {
+
+    var query = req.params.nip;
+
+	connection.query('SELECT * from jadwal WHERE nip =?', query, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({
 				"status": 500,
@@ -16,8 +19,6 @@ router.get('/', function (req, res, next) {
 				"error": null,
 				"response": results
 			}));
-
-			console.log(res.statusCode);
 			//If there is no error, all is good and response is 200OK.
 		}
 	});

@@ -7,12 +7,6 @@ var http = require('http');
 var mysql = require("mysql");
 var bodyParser = require('body-parser');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var jadwalRouter = require('./routes/Jadwal/getJadwal');
-var insertJadwal = require('./routes/Jadwal/insertJadwal')
-var ruanganRouter = require('./routes/Ruangan/ruangan');
-
 var app = express();
 
 // view engine setup
@@ -29,6 +23,20 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var jadwal = require('./routes/Jadwal/getJadwal');
+var addJadwal = require('./routes/Jadwal/postJadwal')
+var ruangan = require('./routes/Ruangan/getRuangan');
+var loginMhs = require('./routes/Mahasiswa/LoginMhs');
+var loginDosen = require('./routes/Dosen/LoginDosen');
+var RegisMhs  = require('./routes/Mahasiswa/RegisMhs');
+var RegisDosen = require('./routes/Dosen/RegisDosen');
+var carijadwal = require('./routes/Jadwal/getJadwalRuangan');
+var jadwalDosen = require('./routes/Jadwal/getJadwalDosen');
+var cariRuangan = require('./routes/Ruangan/findRuangan');
+var ruanganId = require('./routes/Ruangan/getRuanganbyId');
+
 // Database Connection
 app.use(function (req, res, next) {
   global.connection = mysql.createConnection({
@@ -42,11 +50,17 @@ app.use(function (req, res, next) {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api/v1/jadwal', jadwalRouter);
-app.use('/getAll/ruangan', ruanganRouter);
-app.use('/add/Jadwal', insertJadwal);
-
-
+app.use('/api/allJadwal', jadwal);
+app.use('/api/allRuangan', ruangan);
+app.use('/api/addJadwal', addJadwal);
+app.use('/api/logMahasiswa',loginMhs);
+app.use('/api/logDosen', loginDosen);
+app.use('/api/regisMahasiswa', RegisMhs);
+app.use('/api/regisDosen', RegisDosen);
+app.use('/api/getJadwalRuangan', carijadwal);
+app.use('/api/getjadwalDosen', jadwalDosen);
+app.use('/api/cariRuangan', cariRuangan);
+app.use('/api/getRuanganbyId',ruanganId);
 
 
 
@@ -54,7 +68,6 @@ app.use('/add/Jadwal', insertJadwal);
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
 
 // error handler
 app.use(function (err, req, res, next) {
