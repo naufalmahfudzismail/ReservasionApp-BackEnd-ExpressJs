@@ -13,10 +13,9 @@ router.get('/:username/:password', function (req, res, next) {
                 res.send(JSON.stringify({
                     "status": 500,
                     "error": error,
-                    "response": "Password atau Username Tidak Valid!"
+                    "response": null
                 }));
             } else {
-
                 if (result.lenght > 0) {
                     if (result[0].password == pass) {
                         res.send(JSON.stringify({
@@ -28,7 +27,7 @@ router.get('/:username/:password', function (req, res, next) {
                         res.send(JSON.stringify({
                             "status": res.statusCode,
                             "error": null,
-                            "response": 'Password tidak benar'
+                            "response": null
                         }));
                     }
                 }

@@ -13,6 +13,9 @@ router.post('/', function (req, res, next) {
         kd_role: input.kd_role
 
     };
+
+    var code = res.statusCode;
+    
     connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
         if (error) {
             res.send(JSON.stringify({
@@ -21,13 +24,20 @@ router.post('/', function (req, res, next) {
                 "response": null
             }));
             //If there is error, we send the error in the error section with 500 status
-        } else {
+        } else if (code == 200) {
             res.send(JSON.stringify({
                 "status": res.statusCode,
                 "error": null,
                 "response": results
             }));
             //If there is no error, all is good and response is 200OK.
+        } else {
+            res.send(JSON.stringify({
+                "status": res.statusCode,
+                "error": null,
+                "response": null
+            }));
+              // if error detedcted and got no return
         }
     });
 });
