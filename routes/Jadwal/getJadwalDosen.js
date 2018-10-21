@@ -3,9 +3,12 @@ var router = express.Router();
 
 router.get('/:nip', function (req, res, next) {
 
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
     var query = req.params.nip;
 
-	connection.query('SELECT * from jadwal WHERE nip =?', query, function (error, results, fields) {
+	connection.query('SELECT j.kd_jadwal, j.nm_jadwal, j.hari, DATE_FORMAT(j.tgl, '+"'%e %b, %Y'"+') as tgl, j.jam_awal, j.jam_akhir, d.nm_dosen , j.kd_ruang, j. kd_kelas from jadwal j JOIN dosen d ON j.nip = d.nip WHERE d.nm_dosen=?  ORDER by j.tgl ASC', query, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({
 				"status": 500,

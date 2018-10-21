@@ -22,6 +22,7 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.disable('etag');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -36,6 +37,8 @@ var carijadwal = require('./routes/Jadwal/getJadwalRuangan');
 var jadwalDosen = require('./routes/Jadwal/getJadwalDosen');
 var cariRuangan = require('./routes/Ruangan/findRuangan');
 var ruanganId = require('./routes/Ruangan/getRuanganbyId');
+var namaDosen = require('./routes/Dosen/getNamaDosen');
+var jadwalhari = require('./routes/Jadwal/getJadwalbyHari');
 
 // Database Connection
 app.use(function (req, res, next) {
@@ -61,6 +64,9 @@ app.use('/api/getJadwalRuangan', carijadwal);
 app.use('/api/getjadwalDosen', jadwalDosen);
 app.use('/api/cariRuangan', cariRuangan);
 app.use('/api/getRuanganbyId',ruanganId);
+app.use('/api/getNamaDosen',namaDosen);
+app.use('/api/getJadwalHari', jadwalhari);
+
 
 
 

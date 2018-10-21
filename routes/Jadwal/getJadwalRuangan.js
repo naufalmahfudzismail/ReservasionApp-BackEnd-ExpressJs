@@ -3,9 +3,12 @@ var router = express.Router();
 
 router.get('/:ruang/:hari', function (req, res, next) {
 
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
 	var ruangan = req.params.ruang;
 	var hari  = req.params.hari;
-	var sql = 'SELECT * FROM jadwal WHERE kd_ruang=? AND hari=?';
+	var sql = 'SELECT j.kd_jadwal, j.nm_jadwal, j.hari, DATE_FORMAT(j.tgl, '+"'%e %b, %Y'"+') as tgl, j.jam_awal, j.jam_akhir, d.nm_dosen , j.kd_ruang, j. kd_kelas from jadwal j JOIN dosen d ON j.nip = d.nip WHERE j.hari=? WHERE kd_ruang=? AND hari=? ORDER by j.tgl ASC';
 
 	connection.query(sql,[ruangan, hari], function (error, results, fields) {
 		if (error) {

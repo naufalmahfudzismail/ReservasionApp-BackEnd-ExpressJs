@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/:tgl/:jam_awal/:jam_akhir', function (req, res, next) {
-
+    res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var tgl = req.params.tgl;
     var start = req.params.jam_awal;
     var end = req.params.jam_akhir;
