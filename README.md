@@ -8,4 +8,4 @@ configuration:
 	
   clone this project
 	
-  npm install          for get all depedency
+  type in terminal "npm install"          ----------------for get all depedency
