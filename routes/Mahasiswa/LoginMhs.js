@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/:username/:password', function (req, res, next) {
+router.get('/:nim/:password', function (req, res, next) {
 
     res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    var user = req.params.username;
+    var user = req.params.nim;
     var pass = req.params.password;
 
-    connection.query("SELECT * FROM Akun WHERE username = ? ",
-        [user],
+    connection.query("SELECT * FROM Akun WHERE level = 'Mahasiswa' AND kd_role=? AND password =?",
+        [user, pass],
         function (error, result, fields) {
             if (error) {
                 res.send(JSON.stringify({
@@ -19,25 +19,14 @@ router.get('/:username/:password', function (req, res, next) {
                     "response": null
                 }));
             } else {
-
-                if (result.lenght > 0) {
-                    if (result[0].password == pass) {
-                        res.send(JSON.stringify({
-                            "status": res.statusCode,
-                            "error": null,
-                            "response": result
-                        }));
-                    } else {
-                        res.send(JSON.stringify({
-                            "status": res.statusCode,
-                            "error": null,
-                            "response": null
-                        }));
-                    }
-                }
-
+                res.send(JSON.stringify({
+                    "status": res.statusCode,
+                    "error": null,
+                    "response": result
+                }));
             }
-        });
+        }
+    );
 })
 
 

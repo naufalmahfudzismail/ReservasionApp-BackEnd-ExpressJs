@@ -1,15 +1,17 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors');
 
-router.post('/', function (req, res, next) {
+router.post('/', cors() ,function (req, res, next) {
 
     res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	res.header("Access-Control-Allow-Headers", "Content-Type");
 
     var input = req.body;
 
     var data = {
-
+        
         nim : input.nim,
         nm_jadwal : input.nm_jadwal,
         tgl : input.tgl,
@@ -17,7 +19,7 @@ router.post('/', function (req, res, next) {
         jam_selesai : input.jam_selesai,
         tujuan : input.tujuan,
         kd_ruang : input.kd_ruang,
-        hari : inpt.hari
+        hari : input.hari
     };
 
     connection.query("INSERT INTO peminjaman SET ?", data , function (error, results, fields) {

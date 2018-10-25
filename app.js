@@ -6,6 +6,7 @@ var logger = require('morgan');
 var http = require('http');
 var mysql = require("mysql");
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var app = express();
 
@@ -39,6 +40,8 @@ var cariRuangan = require('./routes/Ruangan/findRuangan');
 var ruanganId = require('./routes/Ruangan/getRuanganbyId');
 var namaDosen = require('./routes/Dosen/getNamaDosen');
 var jadwalhari = require('./routes/Jadwal/getJadwalbyHari');
+var addPeminjaman = require('./routes/Peminjaman/postPeminjaman');
+var getMahasiswa = require('./routes/Mahasiswa/getMahasiswa');
 
 // Database Connection
 app.use(function (req, res, next) {
@@ -66,8 +69,8 @@ app.use('/api/cariRuangan', cariRuangan);
 app.use('/api/getRuanganbyId',ruanganId);
 app.use('/api/getNamaDosen',namaDosen);
 app.use('/api/getJadwalHari', jadwalhari);
-
-
+app.use('/api/addPeminjaman', addPeminjaman, cors());
+app.use('/api/getMahasiswa', getMahasiswa);
 
 
 // catch 404 and forward to error handler
