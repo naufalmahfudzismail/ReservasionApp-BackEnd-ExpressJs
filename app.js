@@ -67,10 +67,10 @@ app.use('/api/getJadwalRuangan', carijadwal);
 app.use('/api/getjadwalDosen', jadwalDosen);
 app.use('/api/cariRuangan', cariRuangan);
 app.use('/api/getRuanganbyId',ruanganId);
-app.use('/api/getNamaDosen',namaDosen);
-app.use('/api/getJadwalHari', jadwalhari);
-app.use('/api/addPeminjaman', addPeminjaman, cors());
-app.use('/api/getMahasiswa', getMahasiswa);
+app.use('/api/getNamaDosen',namaDosen);   
+app.use('/api/getJadwalHari', jadwalhari);   // get data jadal perhari
+app.use('/api/addPeminjaman', addPeminjaman, cors()); // insert peminjaman
+app.use('/api/getMahasiswa', getMahasiswa);  // get data manusia dengan nim nya
 
 
 // catch 404 and forward to error handler
