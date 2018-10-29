@@ -4,9 +4,16 @@ var router = express.Router();
 router.post('/', function (req, res, next) {
 
     res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
     var input = req.body;
+
+    var today = new Date();
+
+    var appData = {
+        "error": 1,
+        "data": ""
+    };
 
     var data = {
 
@@ -18,29 +25,24 @@ router.post('/', function (req, res, next) {
     };
 
     var code = res.statusCode;
-    
-    connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
-        if (error) {
-            res.send(JSON.stringify({
-                "status": 500,
-                "error": error,
-                "response": null
-            }));
-            //If there is error, we send the error in the error section with 500 status
-        } else if (code == 200) {
-            res.send(JSON.stringify({
-                "status": res.statusCode,
-                "error": null,
-                "response": results
-            }));
-            //If there is no error, all is good and response is 200OK.
+
+    database.connection.getConnection(function (err, connection) {
+        if (err) {
+            appData["error"] = 1;
+            appData["data"] = "Internal Server Error";
+            res.status(500).json(appData);
         } else {
-            res.send(JSON.stringify({
-                "status": res.statusCode,
-                "error": null,
-                "response": null
-            }));
-              // if error detedcted and got no return
+            connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
+                if (!err) {
+                    appData.error = 0;
+                    appData["data"] = "User registered successfully!";
+                    res.status(201).json(appData);
+                } else {
+                    appData["data"] = "Error Occured!";
+                    res.status(400).json(appData);
+                }
+            });
+            connection.release();
         }
     });
 });
