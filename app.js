@@ -54,7 +54,7 @@ var getMahasiswa = require('./routes/Mahasiswa/getMahasiswa');
 
 // Database Connection
 app.use(function (req, res, next) {
-  global.connection = mysql.createPool({
+  global.connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     database: 'spr_tik',
@@ -63,6 +63,9 @@ app.use(function (req, res, next) {
     debug: false,
   });
   connection.connect();
+  setInterval(function () {
+    connection.query('SELECT 1');
+  }, 5000);
   next();
 });
 
@@ -83,6 +86,8 @@ app.use('/api/getNamaDosen', namaDosen);
 app.use('/api/getJadwalHari', jadwalhari); // get data jadal perhari
 app.use('/api/addPeminjaman', addPeminjaman, cors()); // insert peminjaman
 app.use('/api/getMahasiswa', getMahasiswa); // get data manusia dengan nim nya
+
+process.env.SECRET_KEY = "tekomtek123";
 
 app.use(function (req, res, next) {
   var token = req.body.token || req.headers['token'];

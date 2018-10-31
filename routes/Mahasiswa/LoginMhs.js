@@ -11,63 +11,47 @@ router.post('/', function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    var appData = {};
-    var kode = req.body.nim;
+    var kode = req.body.kode;
     var password = req.body.password;
 
-    database.connection.getConnection(function (err, connection) {
-        if (err) {
-            appData["error"] = 1;
-            appData["data"] = "Internal Server Error";
-            res.status(500).json(appData);
-        } else {
-
-            connection.query("SELECT * FROM Akun WHERE level = 'Mahasiswa' AND kd_role=?",
-                [kode],
-                function (error, result, fields) {
-                    if (error) {
-                        // console.log("error ocurred",error);
-                        res.send({
-                            "code": 400,
-                            "failed": "error ocurred"
-                        })
+    connection.query("SELECT * FROM Akun WHERE level = 'Mahasiswa' AND kd_role=?",
+        [kode],
+        function (error, result, fields) {
+            if (error) {
+                // console.log("error ocurred",error);
+                res.send(JSON.stringify({
+                    "status": 500,
+				    "error": error,
+				    "response": null
+                }))
+            } else {
+                // console.log('The solution is: ', results);
+                if (result.length > 0) {
+                    if (result[0].password == password) {
+                        let token = jwt.sign(JSON.parse(JSON.stringify(result[0])), process.env.SECRET_KEY, {
+                            expiresIn: 5000
+                        });
+                        res.send(JSON.stringify({
+                            "code": 200,
+                            "success": "login sucessfull",
+                            "token ": token
+                        }));
                     } else {
-                        // console.log('The solution is: ', results);
-                        if (results.length > 0) {
-                            if (results[0].password == password) {
-                                let token = jwt.sign(rows[0], process.env.SECRET_KEY, {
-                                    expiresIn: 1440
-                                });
-                                appData.error = 0;
-                                appData["token"] = token;
-                                res.send({
-                                    "code": 200,
-                                    "success": "login sucessfull",
-                                    appData
-                                });
-                            } else {
-                                appData.error = 1;
-                                appData["data"] = "Kode and Password salah";
-                                res.send({
-                                    "code": 204,
-                                    appData
-                                });
-                            }
-                        } else {
-                            appData.error = 1;
-                            appData["data"] = "User tidak terdaftar";
-                            res.send({
-                                "code": 204,
-                                appData
-                            });
-
-                        }
+                        res.send(JSON.stringify({
+                            "code": 204,
+                            "success": "kode atau password salah"
+                        }));
                     }
+                } else {
+                    res.send(JSON.stringify({
+                        "code": 204,
+                        "success": "User tidak terdaftar"
+                    }));
                 }
-            )
-            connection.release();
-        };
-    });
+            }
+        }
+    )
+
 });
 
 

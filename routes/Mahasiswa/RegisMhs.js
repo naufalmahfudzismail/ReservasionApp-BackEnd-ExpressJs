@@ -8,13 +8,6 @@ router.post('/', function (req, res, next) {
 
     var input = req.body;
 
-    var today = new Date();
-
-    var appData = {
-        "error": 1,
-        "data": ""
-    };
-
     var data = {
 
         username: input.username,
@@ -28,18 +21,23 @@ router.post('/', function (req, res, next) {
 
     database.connection.getConnection(function (err, connection) {
         if (err) {
-            appData["error"] = 1;
-            appData["data"] = "Internal Server Error";
-            res.status(500).json(appData);
+            res.send(JSON.stringify({
+				"status": 500,
+				"error":  "Internal Server Error",
+				"response": null
+			}));
         } else {
             connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
-                if (!err) {
-                    appData.error = 0;
-                    appData["data"] = "User registered successfully!";
-                    res.status(201).json(appData);
+                if (!error) {
+                    res.send(JSON.stringify({
+                        "code": 201,
+                        "success" : "Akun berhasil"
+                    }))
                 } else {
-                    appData["data"] = "Error Occured!";
-                    res.status(400).json(appData);
+                    res.send(JSON.stringify({
+                        "code": 400,
+                        "failed": "error ocurred"
+                    }))
                 }
             });
             connection.release();
