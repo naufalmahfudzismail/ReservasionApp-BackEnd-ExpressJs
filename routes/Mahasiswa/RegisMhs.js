@@ -17,32 +17,20 @@ router.post('/', function (req, res, next) {
 
     };
 
-    var code = res.statusCode;
-
-    database.connection.getConnection(function (err, connection) {
-        if (err) {
+    connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
+        if (!error) {
             res.send(JSON.stringify({
-				"status": 500,
-				"error":  "Internal Server Error",
-				"response": null
-			}));
+                "code": 201,
+                "success": "Akun berhasil terdaftar"
+            }))
         } else {
-            connection.query("INSERT INTO akun SET ?", data, function (error, results, fields) {
-                if (!error) {
-                    res.send(JSON.stringify({
-                        "code": 201,
-                        "success" : "Akun berhasil"
-                    }))
-                } else {
-                    res.send(JSON.stringify({
-                        "code": 400,
-                        "failed": "error ocurred"
-                    }))
-                }
-            });
-            connection.release();
+            res.send(JSON.stringify({
+                "code": 400,
+                "failed": "error ocurred"
+            }))
         }
     });
+    connection.release();
 });
 
 module.exports = router;

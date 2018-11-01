@@ -12,7 +12,7 @@ router.post('/', cors(), function (req, res, next) {
 
     var data = {
 
-        nim: input.nim,
+        kd_role: input.kd_role,
         nm_jadwal: input.nm_jadwal,
         tgl: input.tgl,
         jam_pinjam: input.jam_pinjam,
@@ -26,12 +26,12 @@ router.post('/', cors(), function (req, res, next) {
             res.send(JSON.stringify({
                 "code": 201,
                 "success": "Permintaan sudah dibuat"
-            }))
+            }));
         } else {
             res.send(JSON.stringify({
                 "code": 400,
                 "success": "error ocurred"
-            }))
+            }));
         }
     });
 });
