@@ -9,7 +9,7 @@ router.get('/:tgl/:jam_awal/:jam_akhir', function (req, res, next) {
     var end = req.params.jam_akhir;
 
     connection.query(
-        'SELECT kd_ruang FROM jadwal where tgl =? AND (jam_awal or jam_akhir BETWEEN ? and ?)',
+        'SELECT kd_ruang FROM ruangan where kd_ruang NOT IN (SELECT kd_ruang FROM jadwal where tgl = ? AND (jam_awal or jam_akhir BETWEEN  ? and ?))',
         [tgl, start, end],
         function (error, results, fields) {
             if (error) {
@@ -23,7 +23,7 @@ router.get('/:tgl/:jam_awal/:jam_akhir', function (req, res, next) {
                 res.send(JSON.stringify({
                     "status": res.statusCode,
                     "error": null,
-                    "response": results
+                    "response": results 
                 }));
                 //If there is no error, all is good and response is 200OK.
             }
