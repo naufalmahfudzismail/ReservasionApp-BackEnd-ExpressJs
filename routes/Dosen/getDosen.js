@@ -8,7 +8,7 @@ router.get('/:kd_dosen', function (req, res, next) {
 
     var kd_dosen = req.params.kd_dosen;
     
-	connection.query('SELECT nm_dosen from dosen where kd_dosen=?', kd_dosen, function (error, results, fields) {
+	connection.query('SELECT NIP as kd_role, nm_dosen as nama from dosen where NIP=?', kd_dosen, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({
 				"status": 500,

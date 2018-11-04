@@ -7,7 +7,7 @@ router.get('/:nim', function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     var nim =  req.params.nim
 
-	connection.query('SELECT * from Mahasiswa where nim =?'
+	connection.query('SELECT NIM as kd_role, nm_mhs as nama from Mahasiswa where nim =?'
 	,nim, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({

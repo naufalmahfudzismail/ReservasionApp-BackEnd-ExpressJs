@@ -1,43 +1,57 @@
 var express = require('express');
 var router = express.Router();
+var cors = require("cors")
+var jwt = require("jsonwebtoken");
 
-router.get('/:username/:password', function (req, res, next) {
+router.use(cors());
+process.env.SECRET_KEY = "tekomtek123";
+
+router.post('/', function (req, res, next) {
 
     res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    var user = req.params.username;
-    var pass = req.params.password;
+    var kode = req.body.kode;
+    var password = req.body.password;
 
-    connection.query("SELECT * FROM Akun WHERE username = ? ",
-        [user],
+    connection.query("SELECT * FROM Akun WHERE level = 'Dosen' AND kd_role=?",
+        [kode],
         function (error, result, fields) {
             if (error) {
+                // console.log("error ocurred",error);
                 res.send(JSON.stringify({
                     "status": 500,
-                    "error": error,
-                    "response": null
-                }));
+				    "error": error,
+				    "response": null
+                }))
             } else {
-                if (result.lenght > 0) {
-                    if (result[0].password == pass) {
+                // console.log('The solution is: ', results);
+                if (result.length > 0) {
+                    if (result[0].password == password) {
+                        let token = jwt.sign(JSON.parse(JSON.stringify(result[0])), process.env.SECRET_KEY, {
+                            expiresIn: 5000
+                        });
                         res.send(JSON.stringify({
-                            "status": res.statusCode,
-                            "error": null,
-                            "response": result
+                            "code": 200,
+                            "success": "login berhasil",
+                            "token ": token
                         }));
                     } else {
                         res.send(JSON.stringify({
-                            "status": res.statusCode,
-                            "error": null,
-                            "response": null
+                            "code": 204,
+                            "success": "kode atau password salah"
                         }));
                     }
+                } else {
+                    res.send(JSON.stringify({
+                        "code": 204,
+                        "success": "Dosen tidak terdaftar"
+                    }));
                 }
-
             }
-        });
-})
+        }
+    )
 
+});
 
 module.exports = router

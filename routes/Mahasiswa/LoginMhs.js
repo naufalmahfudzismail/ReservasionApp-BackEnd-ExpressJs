@@ -33,7 +33,7 @@ router.post('/', function (req, res, next) {
                         });
                         res.send(JSON.stringify({
                             "code": 200,
-                            "success": "login sucessfull",
+                            "success": "login berhasil",
                             "token ": token
                         }));
                     } else {
@@ -45,7 +45,7 @@ router.post('/', function (req, res, next) {
                 } else {
                     res.send(JSON.stringify({
                         "code": 204,
-                        "success": "User tidak terdaftar"
+                        "success": "Mahasiswa tidak terdaftar"
                     }));
                 }
             }

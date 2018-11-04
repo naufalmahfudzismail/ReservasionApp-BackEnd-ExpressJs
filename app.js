@@ -47,7 +47,7 @@ var carijadwal = require('./routes/Jadwal/getJadwalRuangan');
 var jadwalDosen = require('./routes/Jadwal/getJadwalDosen');
 var cariRuangan = require('./routes/Ruangan/findRuangan');
 var ruanganId = require('./routes/Ruangan/getRuanganbyId');
-var namaDosen = require('./routes/Dosen/getNamaDosen');
+var getDosen = require('./routes/Dosen/getDosen');
 var jadwalhari = require('./routes/Jadwal/getJadwalbyHari');
 var addPeminjaman = require('./routes/Peminjaman/postPeminjaman');
 var getMahasiswa = require('./routes/Mahasiswa/getMahasiswa');
@@ -82,7 +82,7 @@ app.use('/api/getJadwalRuangan', carijadwal);
 app.use('/api/getjadwalDosen', jadwalDosen);
 app.use('/api/cariRuangan', cariRuangan);
 app.use('/api/getRuanganbyId', ruanganId);
-app.use('/api/getNamaDosen', namaDosen);
+app.use('/api/getDosen', getDosen);
 app.use('/api/getJadwalHari', jadwalhari); // get data jadal perhari
 app.use('/api/addPeminjaman', addPeminjaman, cors()); // insert peminjaman
 app.use('/api/getMahasiswa', getMahasiswa); // get data manusia dengan nim nya
