@@ -1,4 +1,4 @@
-# **ReservationApp - Back End Services - Resutful API - ExpressJs**
+# **ReservationApp - Back End Services - Restful API - ExpressJs**
 
 
 ## **configuration:**
