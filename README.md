@@ -1,11 +1,16 @@
-# ReservationApp-BackEnd-ExpressJs
+# **ReservationApp - Back End Services - Resutful API - ExpressJs**
 
-EXPRESS JS API Builder with Mysql Database
 
-configuration:
+##**configuration:**
 
-  install nodejs       https://nodejs.org/en/download/
+
+
+  **1)install nodejs**       
+  
+  https://nodejs.org/en/download/
 	
-  clone this project
 	
-  type in terminal "npm install"          ----------------for get all depedency
+	
+  **2)clone this project**
+	
+  type in terminal "npm install"          ---------------- for get all depedencies
