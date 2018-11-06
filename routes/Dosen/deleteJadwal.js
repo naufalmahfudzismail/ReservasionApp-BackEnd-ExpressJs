@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function (req, res, next) {
+router.delete('/:kd_role', function (req, res, next) {
 
 	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    
+    query = req.body.kd_role
 	
-	connection.query('SELECT kd_peminjmanan as kode, kd_role, kd_ruang, jam_pinjam as start_time, jam_selesai as end_time, tgl, tujuan, hari, nm_jadwal FROM Peminjaman'
+    connection.query('DELETE FROM jadwal where kd_role = ?', 
+    query
 	, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({
