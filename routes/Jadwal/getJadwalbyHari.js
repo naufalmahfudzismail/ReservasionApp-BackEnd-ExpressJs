@@ -9,7 +9,7 @@ router.get('/:hari', function (req, res, next) {
     var query = req.params.hari;
 
     connection.query
-    ('SELECT j.kd_jadwal, j.nm_jadwal, j.hari, DATE_FORMAT(j.tgl, '+"'%e %b, %Y'"+') as tgl, j.jam_awal, j.jam_akhir, d.nm_dosen , j.kd_ruang, j. kd_kelas from jadwal j JOIN dosen d ON j.nip = d.nip WHERE j.hari=?  ORDER by j.tgl ASC', 
+    ('SELECT j.kd_jadwal, j.nm_jadwal, j.hari, DATE_FORMAT(j.tgl, '+"'%e %b, %Y'"+') as tgl, j.jam_awal, j.jam_akhir, d.nm_dosen , j.kd_ruang, j. kd_kelas from jadwal j JOIN dosen d ON j.kd_role. = d.nip WHERE j.hari=?  ORDER by j.tgl ASC', 
     query, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({
