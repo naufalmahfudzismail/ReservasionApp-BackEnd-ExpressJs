@@ -6,7 +6,7 @@ router.get('/', function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 	
-	connection.query('SELECT j.kd_jadwal, j.nm_jadwal, j.hari, DATE_FORMAT(j.tgl, '+"'%e %b, %Y'"+') as tgl, j.jam_awal, j.jam_akhir, d.nm_dosen , j.kd_ruang, j. kd_kelas from jadwal j JOIN dosen d ON j.nip = d.nip  ORDER by j.tgl ASC '
+	connection.query('SELECT j.kd_jadwal, j.nm_jadwal, j.hari, DATE_FORMAT(j.tgl, '+"'%e %b, %Y'"+') as tgl, j.jam_awal, j.jam_akhir, d.nm_dosen , j.kd_ruang, j. kd_kelas from jadwal j JOIN dosen d ON j.kd_role = d.nip  ORDER by j.tgl ASC '
 	, function (error, results, fields) {
 		if (error) {
 			res.send(JSON.stringify({
